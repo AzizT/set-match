@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau des Spécialités Coachs{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+
+            <h1 class="row justify-content-around titre mt-5 py-1">Tableau des Spécialités Coachs</h1>
+
+            {# message flash codé dans le  controller, appelé ici, pour alerter que le profil a bien été modifié via le formulaire #}
+            {% for message in app.flashes('specialite_add') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+
+            {% for message in app.flashes('specialite_edit') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+
+            {% for message in app.flashes('specialite_remove') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+        
+
+            <a class="nav-link text-center" href="{{ path('admin_specialite_add') }}">
+                <button class="add btn btn-outline-light my-4" type="button">
+                    Ajouter Spécialité
+                </button>
+            </a>
+
+          <table id="mydatatable" class="table table-dark table-hover text-center mb-5">
+
+              <thead>
+                <tr>
+                  <th  scope="col">Id</th>
+                  <th  scope="col">Titre</th>
+                  <th  scope="col">Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+              {% for specialite in specialites %}
+                <tr>
+                  <td>{{ specialite.id }}</td>
+                  <td>{{ specialite.titre }}</td>
+                  <td>
+
+                {# bouton show en commentaire, je verraisplus tard si j' en ai besoins #}
+                  {# <button class="crud btn btn-outline-light btn-sm " type="button" title="Voir Profil">
+                    <a class="nav-link" href="{{ path('index', {id: coach.id}) }}"><i class="fas fa-search"></i></a>
+                  </button> #}
+
+                  <button class="crud btn btn-outline-light btn-sm " type="button" title="Modifier">
+                    <a class="nav-link" href="{{ path('admin_specialite_edit', {id: specialite.id}) }}"><i class="fas fa-pen-alt"></i></a>
+                  </button>
+
+                  <button class="crud btn btn-outline-light btn-sm " type="button" title="Supprimer">
+                    <a class="nav-link" href="{{ path('admin_specialite_delete', {id: specialite.id}) }}"><i class="fas fa-trash-alt"></i></a>
+                  </button>
+
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+
+          </table>
+
+</div>
+
+{% endblock %}

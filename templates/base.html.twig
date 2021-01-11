@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block metaDescription %}{% endblock %}
+        <title>{% block title %}Set & Match, l' Appli Tennis{% endblock %}</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        {# links pour databaseTables #}
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css"/>
+
+        <!-- link fontawesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+        {# mon css #}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}"
+
+        {# css par défaut, sinon, sera remplacé par un particulier #}
+        {% block stylesheets %}{% endblock %}
+
+    </head>
+    <body>
+
+    <div class="container-fluid">
+
+    {# --------------- début de header ---------------- #}
+
+        {% block header %}
+
+        <header id="haut">
+
+            <div class="row logoTitreMenu">
+                <div class="col-md-1 col-sm-2 col-xs-2 logoSm mt-3">
+                  <a href="{{ path('index')}}">
+                    <div class="row justify-content-around">                 
+                      <img class="img img-fluid" style="max-width:50px" src="{{asset('img/logoSm.webp')}}" alt="logo de Set & Match" title="logo Set & Match" loading="lazy">                 
+                    </div>
+                    <div class="row  justify-content-around titleSm">
+                      <p><strong>SET & MATCH</strong></p>
+                    </div>
+                  </a>
+                </div>
+
+                <nav class="navbar col-md-11 navbar-dark navbar-expand-lg navMenu">
+                
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                      <a class="navbar-brand text-light" href="{{ path('index')}}"><button type="button" class="btn btn-lg boutonMenu">Home</button></a>
+
+                      {% if app.user %}
+                      <ul class="navbar-nav mr-auto mt-lg-0">
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ path('coachs')}}"><button type="button" class="btn btn-lg boutonMenu">Coachs</button></a>
+                          </li>
+
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ path('joueurs')}}"><button type="button" class="btn btn-lg boutonMenu">Joueurs</button></a>
+                          </li>
+                          
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ path('profil_prive', {id: app.user.id}) }}"><button type="button" class="btn btn-lg boutonMenu"><i class="fas fa-user-circle"></i> {{ app.user.username }}</button></a>
+                          </li>
+                          
+                          <li class="nav-item">
+                           <a class="nav-link"   href="{{ path('app_logout') }}"><button type="button" class="btn btn-lg boutonMenu">LogOut <i class="fas fa-sign-out-alt"></i></button></a>
+                          </li>
+
+                          {# début du dropdown menu réservé à l'admin #}
+
+                              {% if is_granted('ROLE_ADMIN') %}
+                              
+                              <li class="nav-item dropdown">
+
+                                      <a class="nav-link <!--dropdown-toggle-->" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                              <button class="btn btn-lg boutonMenu" type="button">Admin <i class="fas fa-arrow-alt-circle-down"></i></button>
+                                      </a>
+
+                                      <div class="dropdown-menu text text-center" aria-labelledby="navbarDropdown">
+
+                                              <a class="dropdown-item" href="{{ path('admin_liste_users')}}"><button class="btn btn-sm" type="button">Inscrits</button></a>
+
+                                              <a class="dropdown-item" href="{{ path('admin_liste_langues')}}"><button class="btn btn-sm" type="button">Langues</button></a>
+
+                                              <a class="dropdown-item" href="{{ path('admin_liste_plannings')}}"><button class="btn btn-sm" type="button">Plannings</button></a>
+
+                                              <a class="dropdown-item" href="{{ path('admin_liste_specialites')}}"><button class="btn btn-sm" type="button">Spécialités</button></a>
+
+                                      </div>
+                              </li>
+
+                              {% endif %}
+
+                              {# fin du dropdown menu #}
+
+                          {% else %}
+
+                          {# --------------------------------------------------- #}
+
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ path('app_register')}}"><button type="button" class="btn btn-lg boutonMenu">Inscription</button></a>
+                          </li>
+  
+                          <li class="nav-item">
+                           <a class="nav-link"   href="{{ path('app_login')}}"><button type="button" class="btn btn-lg boutonMenu"><i class="fas fa-sign-in-alt"></i> LogIn</button></a>
+                          </li>
+
+                      </ul>
+
+                      {% endif %}
+
+                      
+                      
+                    </div>
+                    
+                    {# <form class="form-inline"> #}
+                        {# <p>Rechercher</p> #}
+                        <a class="nav-link" href="{{ path('search') }}"><button class="btn btn-outline-success my-2 my-sm-0 boutonMenu"><i class="fas fa-search"></i></button></a>
+                    {# </form> #}
+
+                  </nav>
+
+                  {# fin de nav #}
+
+            </div>
+
+
+        </header>
+
+        {% endblock %}
+
+    {# --------------- fin de header ---------------- #}
+
+    {# --------------- début de main ---------------- #}
+
+        {% block content %}{% endblock %}
+
+        {# <section> #}
+        {# <a href="#haut"><button class="ancre" type="button"><i class="fas fa-arrow-alt-circle-up" aria-hidden="true"></i></button></a> #}
+    
+        <!-- aria accès de contenus web plus faciles pour les handicapés=> https://developer.mozilla.org/fr/docs/Accessibilit%C3%A9/ARIA -->
+        {# </section> #}
+
+         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up" aria-hidden="true"></i></button> 
+
+    {# --------------- fin de main ---------------- #}
+
+    {# --------------- début de footer ---------------- #}
+        
+         {% block footer %}
+
+         <footer class="pt-5">
+
+            <div class="row topFooter">
+
+              <div class="col-md-7" id="sponsors">
+
+                <figure class="figure pt-1 mr-4">
+                  <img src="{{asset('img/fft_logo.png')}}" alt="logo fédération française de tennis" title="logo fédération française de tennis"class="figure-img">
+                </figure>
+
+                <figure class="figure mr-4">
+                  <img src="{{asset('img/bnp_logo.png')}}" alt="logo BNP" title="logo BNP" class="figure-img">
+                </figure>
+
+                <figure class="figure mr-4">
+                  <img src="{{asset('img/lacoste_logo.png')}}" alt="logo Lacoste" title="logo Lacoste" class="figure-img">
+                </figure>
+
+                <figure class="figure mr-4">
+                  <img src="{{asset('img/rolex_logo.png')}}" alt="logo Rolex" title="logo Rolex" class="figure-img">
+                </figure>
+
+              </div>
+
+              <div class="col-md-3 offset-md-1 pt-4" id="reseauxSoc">
+                <a href src="{{ path('index') }}"><i class="fab fa-facebook-f"></i></a>
+                <a href src="{{ path('index') }}"><i class="fab fa-twitter"></i></a>
+                <a href src="{{ path('index') }}"><i class="fab fa-google-plus-g"></i></a> 
+                <a href src="{{ path('index') }}"><i class="fab fa-instagram"></i></a>
+              </div>
+
+            </div>
+
+            <div class="row justify-content-around bottom-footer">
+
+              <a href="{{ path('index') }}"><p>&copy; 2021 - Set & Match</p></a>
+
+              <a href="{{ path('confidentialite') }}"><p>Données Personnelles</p></a>
+
+              <a href="{{ path('mentions_legales') }}"><p>Mentions Légales</p></a>
+
+              <a href="{{ path('conditions_utilisation') }}"><p>C.G.U.</p></a>
+              
+              <a href="{{ path('contact') }}"><p>Contact</p></a>
+
+            </div>
+
+            <div class="row">
+
+            </div>
+
+        </footer>
+
+         {% endblock %}
+
+    {# --------------- fin de footer ---------------- #}
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    {# links pour databasetable #}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+      $('#mydatatable').DataTable();
+    </script>
+
+    {# js pour le datepicker #}
+    {# <script type="application/javascript" src="{{ asset('js/jquery-1.9.1.js') }}"></script> 
+    <script type="application/javascript" src="{{ asset('js/jquery-ui-1.10.3.custom.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/jquery.ui.datepicker-fr.js') }}"></script> #}
+
+    
+
+    {# <script type="application/javascript">
+
+      $(document).ready(function() {
+        $( "#dateDebut" ).datepicker({
+          defaultDate: "+1w",
+          numberOfMonths: 2,
+          changeMonth: true,
+          changeYear: true,
+          yearRange: '-1:+1',
+          maxDate: '+1Y',
+          onClose: function( selectedDate ) {
+          $( "#dateFin" ).datepicker( "option", "minDate", selectedDate );
+          }
+        });
+        $( "#dateFin" ).datepicker({
+          defaultDate: "+1w",
+          numberOfMonths: 2,
+          changeMonth: true,
+          changeYear: true,
+          maxDate: '+2Y',
+          onClose: function( selectedDate ) {
+          $( "#dateDebut" ).datepicker( "option", "maxDate", selectedDate );
+          }
+        });    
+      });
+
+    </script> #}
+
+    <script type="text/javascript">
+
+    //Get the button:
+    mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    } 
+
+    </script>
+
+    {% block javascripts %}{% endblock %}
+
+    </body>
+</html>

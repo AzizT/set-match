@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription/ Sign In{% endblock %}
+
+{% block content %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+
+<div class="row justify-content-around pt-5">
+    <h1  class="titre mt-5 py-1">Inscription</h1>
+</div>
+
+<div class="row py-5">
+
+    <div class="listing col-md-6 justify-content-around offset-md-3">
+
+        <div class="row">
+            <p class="pt-2 pl-2">* Champs obligatoires</p>
+        </div>
+
+        {{ form_start(registrationForm) }}
+            <div class="row my-5 justify-content-around offset-md-1">
+
+                <div class="col-md-6 col-sm-12">
+                {{ form_row(registrationForm.username, {
+                    label: 'Nom d\'utilisateur *'
+                }) }}
+                </div>
+                
+                <div class="col-md-6 col-sm-12">
+                {{ form_row(registrationForm.email, {
+                    label: 'Email *', 'attr': {'placeholder': 'monadresse@exemple.com'}
+                }) }}
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                {{ form_row(registrationForm.Password, {
+                    label: 'Mot de Passe'
+                }) }}
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                {{ form_row(registrationForm.category, {
+                    label: 'Votre Categorie *'
+                }) }}
+                </div>
+
+                <div class="col-md-8 col-sm-12">
+                {{ form_row(registrationForm.imageFile) }}
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                {{ form_row(registrationForm.agreeTerms, {
+                    label: 'J\'accepte les conditions *'
+                }) }}
+                <p><a href="{{ path('confidentialite') }}">(Lire les Conditions)</a></p>
+                </div>
+
+                <div class="col-md-3 col-sm-12 mt-3">
+                <button type="submit" class="boutonMenu btn">Valider</button>
+                </div>
+
+            </div>
+        {{ form_end(registrationForm) }}
+
+    </div>
+
+</div>
+
+{% endblock %}

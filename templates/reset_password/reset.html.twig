@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Mot de Passe{% endblock %}
+
+{% block content %}
+
+<div class="container pt-5">
+
+    <h1 class="titre my-5 py-1">Nouveau Mot de Passe</h1>
+
+    <div class="listing col-md-6 justify-content-around offset-md-3 my-5 p-5">
+
+    {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword) }}
+        <button class="boutonMenu btn mt-5">Valider</button>
+    {{ form_end(resetForm) }}
+
+    </div>
+
+</div>
+
+{% endblock %}

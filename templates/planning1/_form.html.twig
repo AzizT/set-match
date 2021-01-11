@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+<div class="row my-5 justify-content-around">
+            <div class="col-md-6 col-sm-12">
+            {{ form_row(form.dateDebut, {
+                label: 'Date de début'
+            }) }}
+            </div>
+            <div class="col-md-6 col-sm-12">
+            {{ form_row(form.dateFin, {
+                label: 'Date de fin'
+            }) }}
+            </div>
+            <div class="col-md-6 col-sm-12">
+            {{ form_row(form.lieu, {
+                label: 'Lieu'
+            }) }}
+            </div>
+</div>
+    {# {{ form_widget(form) }} #}
+    <button  class="add text-light btn mb-5">{{ button_label|default('Valider') }}</button>
+{{ form_end(form) }}
+

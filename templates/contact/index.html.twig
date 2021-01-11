@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire de contact{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-around pt-5">
+        <h1 class="titre mt-5 py-1">Nous contacter</h1>
+    </div>
+
+    <div class="row py-5">
+
+        <div class="listing col-md-6 justify-content-around offset-md-3">
+
+            {# message flash codé dans le  ContactController, appelé ici, pour alerter que la demande de contact a bien été reçue #}
+            {% for message in app.flashes('messageContact') %}
+            <div class="alert alert-warning">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+
+            {{ form_start(contactForm) }}
+
+            <div class="row my-3 offset-md-1">
+
+                <div class="col-md-6 col-sm-12">
+                {{ form_row(contactForm.nom, {
+                    label: 'Votre nom'
+                }) }}
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                {{ form_row(contactForm.email, {
+                    label: 'Votre adresse mail'
+                }) }}
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                {{ form_row(contactForm.message, {
+                    label: 'Votre message'
+                }) }}
+                </div>
+
+            </div>
+
+            <div class="row justify-content-around">
+                <button type="submit" class="boutonMenu btn  mb-3">Valider</button>
+            </div>
+
+            {{ form_end(contactForm) }}
+
+            {# {{ form(contactForm) }} #}
+
+        </div>
+    </div>
+
+{% endblock %}

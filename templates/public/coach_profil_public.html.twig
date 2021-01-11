@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Fiche Profil de {{ user.prenom }} {{ user.nom }}{% endblock %}
+
+{% block metaDescription %}<meta name="Profil Public" description="Consulter le profil public de chaque coach. Notamment son calendrier des disponibilités, ses spécialités, son tarif etc..." />{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-around pt-5">
+
+<h1 class="titre mt-5 py-1">Fiche {{ user.prenom }} {{ user.nom }}</h1>
+
+</div>
+
+<div class="row justify-content-around mt-5">
+    
+    <div class="col-md-8 profil-public mb-5">
+
+            <div class="row">
+
+                <div class="col-md-5 mx-auto aide_profil p-3 mb-1 text-center">
+
+                    {% if user.imageName %}
+                        <img class="mb-3" src="{{ asset('img/' ~ user.imageName ) }}" alt="Portrait de {{ user.prenom }} {{ user.nom }}" title="Portrait de {{ user.prenom }} {{ user.nom }}" loading="lazy">
+                    {% else %}
+                        <img src="{{ asset('img/player.jpg') }}" class="card-img-top" alt="Portrait de {{ user.prenom }} {{ user.nom }}" title="Portrait de {{ user.prenom }} {{ user.nom }}" loading="lazy">
+                    {% endif %}
+                
+                    <p class="card-text mb-1">Prénom: {{ user.prenom }}</p>
+                    <p class="card-text mb-1">Nom: {{ user.nom }}</p>
+                    <p class="card-text mb-1">Langue étrangère: </p>
+                    <p class="card-text mb-1">Tarif: {{ user.budget }} €/j</p>
+                    <p class="card-text mb-1">Spécialité Coach: </p>
+                    <a href="#"><button type="button" class="btn btn-lg boutonMenu mt-3">Contacter {{ user.username }}</button></a>
+                    
+
+                </div>
+
+                <div class="col-md-5 m-auto aide_profil p-5 text-center">
+                    <p><strong>Présentation:</strong></p>
+                    <p></p>
+                </div>
+
+            </div>    
+
+            <hr>
+
+            <div class="col-md-8 mx-auto my-3 aide_profil p-3">
+                <p class="card-text mb-1"><strong>Besoins: {{ user.besoins }}</strong></p>
+            </div>
+
+            <hr>
+            
+        
+            <div class="card-body text-center">
+                <a href="{{ path('coachs')}}"><button type="button" class="btn btn-lg boutonMenu">Tous les Coachs</button></a>
+            </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

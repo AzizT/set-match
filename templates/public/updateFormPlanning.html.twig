@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Planning{% endblock %}
+
+{% block content %}
+
+<div class="container pt-5">
+    
+    <h1 class="text-center">Modifier un Planning</h1>
+
+        <div class="row my-5 justify-content-around text-center">
+
+    {# test sans include #}
+
+    {{ form_start(form) }}
+        <div class="row my-5 justify-content-around">
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.dateDebut, {
+                        label: 'Date de début'
+                    }) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.dateFin, {
+                        label: 'Date de fin'
+                    }) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.lieu, {
+                        label: 'Lieu'
+                    }) }}
+                    </div>
+        </div>
+        {# {{ form_widget(form) }} #}
+        <button  class="add text-light btn mb-5">{{ button_label|default('Valider') }}</button>
+    {{ form_end(form) }}
+
+    {# fin de test #}
+
+    {# {{ include('planning/_form.html.twig') }} #}
+
+    </div>
+
+    {# {{ include('planning/_form.html.twig', {'button_label': 'Update'}) }} #}
+
+    {# <a href="{{ path('planning_index') }}">back to list</a> #}
+
+    {# {{ include('planning/_delete_form.html.twig') }} #}
+
+</div>
+{% endblock %}

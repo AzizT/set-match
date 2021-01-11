@@ -1,0 +1,8 @@
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
+    # remettre false ci dessus plus tard
+    # https://nouvelle-techno.fr/actualites/envoyer-des-e-mails-avec-symfony-4
+
+framework:
+    profiler: { only_exceptions: false }

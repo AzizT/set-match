@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau des Inscrits{% endblock %}
+
+{% block content %}
+
+<div class="container pt-5">
+
+
+            <h1 class="row justify-content-around titre mt-5 py-1">Tableau des Inscrits</h1>
+
+            {# message flash codé dans le  controller, appelé ici, pour alerter que le profil a bien été modifié via le formulaire #}
+            {% for message in app.flashes('user_add') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+
+            {% for message in app.flashes('user_edit') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+
+            {% for message in app.flashes('user_remove') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+        
+
+            <a class="nav-link text-center" href="{{ path('admin_user_add') }}">
+                <button class="add btn btn-outline-light my-4" type="button">
+                    Ajouter un Inscrit
+                </button>
+            </a>
+
+          <table id="mydatatable" class="table table-dark table-hover text-center mb-5">
+
+              <thead>
+                <tr>
+                  <th  class="col-md-1" scope="col">Id</th>
+                  <th  class="col-md-2" scope="col">Pseudo</th>
+                  <th  class="col-md-1" scope="col">Photo</th>
+                  <th  class="col-md-2" scope="col">Nom</th>
+                  <th  class="col-md-1" scope="col">Prénom</th>
+                  <th  class="col-md-2" scope="col">email</th>
+                  <th  class="col-md-1" scope="col">Catégorie</th>
+                  <th  class="col-md-2" scope="col">Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+              {% for user in users %}
+                <tr>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.username }}</td>
+                  <td><img src="{{ asset('img/' ~ user.imageName ) }}" class="card-img-top" alt="Portrait de {{ user.prenom }} {{ user.nom }}" title="Portrait de {{ user.prenom }} {{ user.nom }}" loading="lazy"></td>
+                  <td>{{ user.nom }}</td>
+                  <td>{{ user.prenom }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.category }}</td>
+                  <td>
+
+                      {# bouton show en commentaire, je verraisplus tard si j' en ai besoins #}
+                      {# <button class="crud btn btn-outline-light btn-sm " type="button" title="Voir Profil">
+                        <a class="nav-link" href="{{ path('index', {id: coach.id}) }}"><i class="fas fa-search"></i></a>
+                      </button> #}
+
+                      <button class="crud btn btn-outline-light btn-sm " type="button" title="Modifier">
+                        <a class="nav-link" href="{{ path('admin_user_edit', {id: user.id}) }}"><i class="fas fa-pen-alt"></i></a>
+                      </button>
+
+                      <button class="crud btn btn-outline-light btn-sm " type="button" title="Supprimer">
+                        <a class="nav-link" href="{{ path('admin_user_delete', {id: user.id}) }}"><i class="fas fa-trash-alt"></i></a>
+                      </button>
+
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+
+          </table>
+
+          
+
+</div>
+
+{% endblock %}
+
+{# {% block javascripts %}{% endblock %} #}

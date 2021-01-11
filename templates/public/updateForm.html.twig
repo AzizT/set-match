@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifiez votre Profil{% endblock %}
+
+{% block content %}
+
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+
+    <div class="row justify-content-around pt-5">
+        <h1 class="titre mt-5 py-1">Modifier/Compléter Profil</h1>
+    </div>
+
+    <div class="row py-5">
+
+        <div class="listing col-md-8 justify-content-around offset-md-2 p-3">
+
+            {{ form_start(updateForm) }}
+                <div class="row my-3 justify-content-around">
+                    <div class="col-md-2 col-sm-12">
+                    {{ form_row(updateForm.nom, {
+                        label: 'Nom'
+                    }) }}
+                    </div>
+                    <div class="col-md-2 col-sm-12">
+                    {{ form_row(updateForm.prenom, {
+                        label: 'Prénom'
+                    }) }}
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                    {{ form_row(updateForm.username, {
+                        label: 'Nom d\'utilisateur'
+                    }) }}
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                    {{ form_row(updateForm.category, {
+                        label: 'Votre Categorie'
+                    }) }}
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                    {{ form_row(updateForm.email, {
+                        label: 'Email'
+                    }) }}
+                    </div>
+                    
+                    <div class="col-md-3 col-sm-12">
+                    {{ form_row(updateForm.Password, {
+                        label: 'Mot de Passe'
+                    }) }}
+                    </div>
+                    <div class="col-md-5 col-sm-12">
+                    {{ form_row(updateForm.imageFile) }}
+                    </div>
+
+                    {% for planning in updateForm.plannings %}
+                        {% if loop.last %}
+                            <div class="col-md-7 col-sm-12">
+                                {{ form_row(planning, {
+                                    label: 'Dernière disponibilité'
+                                }) }}
+                            </div>
+                        {% else %}
+                                    
+                            <div class="d-none col-md-3 col-sm-12">
+                                {{ form_row(planning, {
+                                    label: ''
+                                }) }}
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+
+                    {# {% for langue in updateForm.langues %}
+                        {% if loop.last %}
+                            <div class="col-md-7 col-sm-12">
+                                {{ form_row(langue, {
+                                    label: 'Langue etrangère'
+                                }) }}
+                            </div>
+                        {% else %}
+                                    
+                            <div class="d-none col-md-3 col-sm-12">
+                                {{ form_row(langue, {
+                                    label: ''
+                                }) }}
+                            </div>
+
+                        {% endif %}
+                    {% endfor %} #}
+
+                    <div class="col-md-6 col-sm-12 " rows="3">
+                    {{ form_row(updateForm.presentation, {
+                        label: 'Votre Présentation'
+                    }) }}
+                    </div>
+                    <div class="col-md-6 col-sm-12" rows="3">
+                    {{ form_row(updateForm.besoins, {
+                        label: 'Vos Besoins'
+                    }) }}
+                    </div>
+                    
+                    {# {{ include ('public/datepicker_form.html.twig') }} #}
+
+                </div>
+
+                <div class="row justify-content-around">
+                    <button type="submit" class="boutonMenu btn mb-3">Valider</button>
+                </div>
+            {{ form_end(updateForm) }}
+
+        </div>
+
+    </div>
+
+{% endblock %}

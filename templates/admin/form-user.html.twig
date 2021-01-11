@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Membre{% endblock %}
+
+{% block content %}
+
+{% for flashError in app.flashes('verify_email_error') %}
+    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+{% endfor %}
+
+    <div class="row justify-content-around pt-5">
+        <h1 class="titre mt-5 py-1">Ajouter un Membre</h1>
+    </div>
+
+    <div class="row py-5">
+
+        <div class="listing col-md-8 justify-content-around offset-md-2 p-3">
+
+            {{ form_start(addUserForm) }}
+
+                <div class="row my-3 justify-content-around">
+
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(addUserForm.username, {
+                        label: 'Nom d\'utilisateur'
+                    }) }}
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(addUserForm.nom, {
+                        label: 'Nom'
+                    }) }}
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(addUserForm.prenom, {
+                        label: 'Prénom'
+                    }) }}
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(addUserForm.email, {
+                        label: 'Email'
+                    }) }}
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(addUserForm.Password, {
+                        label: 'Mot de Passe'
+                    }) }}
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(addUserForm.category, {
+                        label: 'Votre Categorie'
+                    }) }}
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                    {{ form_row(addUserForm.imageFile) }}
+                    </div>
+                    
+                </div>
+
+                <div class="row justify-content-around">
+                    <button type="submit" class="boutonMenu btn mb-3">Valider</button>
+                </div>
+            {{ form_end(addUserForm) }}
+
+        </div>
+
+    </div>
+
+{% endblock %}

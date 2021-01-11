@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Profils de tous les Joueurs{% endblock %}
+
+{% block metaDescription %}<meta name="Les Joueurs Inscrits" description="Vous êtes Coach ? Consulter sur notre page tous les profils de nos Joueuses et nos Joueurs inscrits sur Set & Match. Vous pourrez entrer en contact avec eux pour leur proposer vos services !" />{% endblock %}
+
+{% block content %}
+
+        <div class="row justify-content-around pt-5">
+            <h1 class="titre mt-5 py-1">Les Joueurs</h1>
+        </div>
+
+        <div class="row text-center py-5">
+
+            <div class="listing col-md-8 offset-md-2">
+
+              {# boucle qui va appeler les profils joueurs en bdd #}
+           
+              {% for user in users %}
+                <div class="tile-wrap m-4">
+                  <a href="{{ path('player_profil_public', {id: user.id}) }}">
+                  <div class="card profil_joueur" style="width: 15rem;">
+
+                    {% if user.imageName %}
+                      <img src="{{ asset('img/' ~ user.imageName ) }}" class="card-img-top" alt="..." loading="lazy">
+                    {% else %}
+                      <img src="{{ asset('img/default_player.jpg') }}" class="card-img-top" alt="..." loading="lazy">
+                    {% endif %}
+                    
+                    <div class="card-body">
+                      <h5 class="card-title">{{ user.prenom }} {{ user.nom }}</h5>
+                      <p class="card-text mb-1">{{ user.category }}</p>
+                      <a href="{{ path('player_profil_public', {id: user.id}) }}" class="btn boutonProfil mt-1">Voir Profil</a>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+              {% endfor %}
+
+              {# fin de la boucle #}
+              
+            </div>
+
+        </div>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+{% block metaDescription %}<meta name="Accueil" description="Accueil de l'appli Tennis Set & Match. Inscrivez-vous et parametrez votre profil. Et matchez vos disponibilités avec les autres inscrits pour vous retrouver sur le court !" />{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+              {# message flash codé dans le  controller, appelé ici, pour alerter que l' inscription' a bien réussie #}
+              {% for message in app.flashes('register_success') %}
+                <div class="alert alert-warning">
+                  {{ message }}
+                  {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              {% endfor %}
+              
+</div>
+
+<div class="row justify-content-around py-5 text-center">
+
+              
+
+              
+
+              <article class="accueil order-md-2">
+
+              <h1>SET & MATCH</h1>
+              
+              
+
+                <p class="mb-4">L' appli qui fait matcher coachs et joueurs.</p>
+                <p class="pt-4">Besoin d' un coach avant un tournoi ?</p>
+                <p>Envie de coacher un joueur en particulier<br> pour lui apporter vos <span>+</span>.</p>
+                <p> Tous sont <strong>inscrits</strong> ici ! </p>
+                <p> Exposez votre <strong>profil</strong>.</p>
+                <p>Reglez votre <strong>disponibilité</strong>.</p> 
+                <p>Et <strong>matchez là</strong> pour trouver votre partenaire !</p>
+              
+              </article>
+
+              <aside class="order-md-1">
+
+                <div class="row">
+                  <div class="tile-wrap m-4">
+                    <a href="{{ path('player_profil_public', {id: userPlayer.id}) }}">
+                    <div class="card profil_joueur" style="width: 15rem;">
+                    {% if userPlayer.imageName %}
+                       <img src="{{ asset('img/' ~ userPlayer.imageName ) }}" class="card-img-top mt-3" alt="Portrait de {{ userPlayer.prenom }} {{ userPlayer.nom }}" title="Portrait de {{ userPlayer.prenom }} {{ userPlayer.nom }}" loading="lazy">
+                    {% else %}
+                       <img src="{{ asset('img/default_player.webp') }}" class="card-img-top" alt="Portrait de {{ userPlayer.username }}" title="Portrait de {{ userPlayer.username }}" loading="lazy">
+                    {% endif %}
+                      <div class="card-body">
+                        <h5 class="card-title">{{ userPlayer.prenom }} {{ userPlayer.nom }}</h5>
+                        <p class="card-text mb-1">{{ userPlayer.category }}</p>
+                        <a href="{{ path('player_profil_public', {id: userPlayer.id}) }}" class="btn boutonProfil mt-1">Voir Profil</a>
+                      </div>
+                    </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="row justify-content-around">
+                  <a href="{{ path('joueurs') }}"><button type="button" class="btn btn-lg boutonProfil">Voir + de Joueurs</button></a>
+                </div>
+
+              </aside>
+
+              <aside class="order-md-3">
+
+              <div class="row">
+              <div class="tile-wrap m-4">
+                  <a href="{{ path('coach_profil_public', {id: userCoach.id}) }}">
+                  <div class="card profil_joueur" style="width: 15rem;">
+
+                    {% if userCoach.imageName %}
+                      <img src="{{ asset('img/' ~ userCoach.imageName ) }}" class="card-img-top mt-3" alt="Portrait de {{ userCoach.prenom }} {{ userCoach.nom }}" title="Portrait de {{ userCoach.prenom }} {{ userCoach.nom }}" loading="lazy">
+                    {% else %}
+                      <img src="{{ asset('img/default_coach.webp') }}" class="card-img-top" alt="Portrait de {{ userCoach.prenom }} {{ userCoach.nom }}" title="Portrait de {{ userCoach.prenom }} {{ userCoach.nom }}" loading="lazy">
+                    {% endif %}
+
+                    <div class="card-body">
+                      <h5 class="card-title">{{ userCoach.prenom }} {{ userCoach.nom }}</h5>
+                      <p class="card-text mb-1">{{ userCoach.category }}</p>
+                      <a href="{{ path('coach_profil_public', {id: userCoach.id}) }}" class="btn mt-1 boutonProfil">Voir Profil</a>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+                </div>
+
+                <div class="row justify-content-around">
+                <a href="{{ path('coachs') }}"><button type="button" class="btn btn-lg boutonProfil">Voir + de Coachs</button></a>
+                </div>
+
+              </aside>
+            
+          </div>
+
+{% endblock %}

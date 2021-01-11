@@ -1,0 +1,110 @@
+{% extends 'base.html.twig'%}
+
+{% block title %}Rechercher un utilisateur{% endblock %}
+
+{% block content %}
+   
+    <div class="row justify-content-around pt-5">
+        <h1 class="titre mt-5 py-1">Rechercher un utilisateur</h1>
+    </div>
+
+    {% for message in app.flashes('erreurUsername') %}
+      <div class="alert alert-warning">
+          {{ message }}
+          {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    {% endfor %}
+
+    {% for message in app.flashes('erreurUserDate') %}
+      <div class="alert alert-warning">
+          {{ message }}
+          {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    {% endfor %}
+
+    {# début de row pour les deux colonnes qui vont accueillir les deux recherches #}
+    <div class="row py-5 justify-content-around">
+
+    {# -------------------------------début de la barre de recherche input text -------------------------- #}
+
+    <div class="col-md-4 py-3 listing">
+    <p class="text-center">Recherchez par mots clés, tels son nom, sa spécialité, les langues qu'il maitrise</p>
+      <div class="form-group offset-md-2">
+      {% form_theme searchForm 'bootstrap_4_layout.html.twig' %}
+      {{ form_start(searchForm) }}
+            <div>
+                {{ form_row(searchForm.searchEngine, {'label': " ", 'attr': {'placeholder': 'mot clé...'}}) }}
+                <button class="offset-md-3 add btn btn-outline-light my-2">Rechercher</button>
+            </div>          
+      {{ form_end(searchForm) }}
+      </div>
+    </div>
+
+    {# -----------------------------------fin de la barre de recherche input text--------------------------- #}
+
+        {# -------------------------------début de la barre de recherche datepicker -------------------------- #}
+
+    <div class="col-md-4 py-3 listing">
+    <p class="text-center">Entrez votre disponibilité. Celles qui lui correspondent apparaitront</p>
+      <div class="form-group offset-md-2">
+      {% form_theme searchDateForm 'bootstrap_4_layout.html.twig' %}
+      {{ form_start(searchDateForm) }}
+            <div>
+                {{ form_row(searchDateForm.searchDateEngine, {'label': " ", 'attr': {'placeholder': ''}}) }}
+                <button class="offset-md-3 add btn btn-outline-light my-2">Rechercher</button>
+            </div>
+      {{ form_end(searchDateForm) }}
+      </div>
+    </div>
+
+    {# -----------------------------------fin de la barre de recherche datepickerDate--------------------------- #}
+
+  </div>
+    {# fin de row #}
+
+    {# ---------------------début de la boucle qui pioche dans les utilisateurs-------------------------- #}
+    
+    <div class="row justify-content-around text-center py-2">
+        <section id="content" class="listing">
+
+                {% for user in users %}
+                <div class="tile-wrap m-4">
+                      <a href="{{ path('player_profil_public', {id: user.id}) }}">
+                      <div class="card profil_joueur" style="width: 15rem;">
+
+                        {% if user.imageName %}
+                          <img src="{{ asset('img/' ~ user.imageName ) }}" class="card-img-top" alt="..." loading="lazy">
+                        {% else %}
+                          <img src="{{ asset('img/default_player.jpg') }}" class="card-img-top" alt="..." loading="lazy">
+                        {% endif %}
+                        
+                        <div class="card-body">
+                          <h5 class="card-title">{{ user.prenom }} {{ user.nom }}</h5>
+                          <p class="card-text mb-1">{{ user.category }}</p>
+                          <a href="{{ path('player_profil_public', {id: user.id}) }}" class="btn boutonProfil mt-1">Voir Profil</a>
+                        </div>
+                      </div>
+                      </a>
+                    </div>
+            {% endfor %}
+
+            </section>
+
+    </div>
+
+    {# -----------------------------------------fin de ma boucle------------------------------------- #}
+    
+    {# <div class="row"> #}
+      <div class="pagination col-md-1 listing p-2 mt-2 mb-5">
+        {{ knp_pagination_render(users) }}
+      </div>
+    {# </div> #}
+
+
+{% endblock %}

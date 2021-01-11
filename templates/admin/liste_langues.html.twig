@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau des Langues{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+
+            <h1 class="row justify-content-around titre mt-5 py-1">Tableau des Langues</h1>
+
+            {# message flash codé dans le  controller, appelé ici, pour alerter que le profil a bien été modifié via le formulaire #}
+            {% for message in app.flashes('langue_add') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+
+            {% for message in app.flashes('langue_edit') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+
+            {% for message in app.flashes('langue_remove') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+        
+
+            <a class="nav-link text-center" href="{{ path('admin_langue_add') }}">
+                <button class="add btn btn-outline-light my-4" type="button">
+                    Ajouter Langue
+                </button>
+            </a>
+
+          <table id="mydatatable" class="table table-dark table-hover text-center mb-5">
+
+              <thead>
+                <tr>
+                  <th  scope="col">Id</th>
+                  <th  scope="col">Nom</th>
+                  <th  scope="col">Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+              {% for langue in langues %}
+                <tr>
+                  <td>{{ langue.id }}</td>
+                  <td>{{ langue.nom }}</td>
+                  <td>
+
+                {# bouton show en commentaire, je verraisplus tard si j' en ai besoins #}
+                  {# <button class="crud btn btn-outline-light btn-sm " type="button" title="Voir Profil">
+                    <a class="nav-link" href="{{ path('index', {id: coach.id}) }}"><i class="fas fa-search"></i></a>
+                  </button> #}
+
+                  <button class="crud btn btn-outline-light btn-sm " type="button" title="Modifier">
+                    <a class="nav-link" href="{{ path('admin_langue_edit', {id: langue.id}) }}"><i class="fas fa-pen-alt"></i></a>
+                  </button>
+
+                  <button class="crud btn btn-outline-light btn-sm " type="button" title="Supprimer">
+                    <a class="nav-link" href="{{ path('admin_langue_delete', {id: langue.id}) }}"><i class="fas fa-trash-alt"></i></a>
+                  </button>
+
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+
+          </table>
+
+</div>
+
+{% endblock %}

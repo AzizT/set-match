@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une disponibilité{% endblock %}
+
+{# {% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui-1.10.3.custom.css') }}"{% endblock %} #}
+
+{% block content %}
+
+    <div class="row justify-content-around pt-5">
+        <h1 class="titre mt-5 py-1">Ajouter une disponibilité</h1>
+    </div>
+
+    
+    
+    <div class="row py-5">
+
+        <div class="listing col-md-6 justify-content-around offset-md-3 p-3">
+
+            {{ form_start(form) }}
+                <div class="row my-3 pl-5 justify-content-around">
+                            <div class="col-md-6 col-sm-12">
+                            {{ form_row(form.dateDebut, {
+                                label: 'Date de début'
+                            }) }}
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                            {{ form_row(form.dateFin, {
+                                label: 'Date de fin'
+                            }) }}
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                            {{ form_row(form.lieu, {
+                                label: 'Lieu'
+                            }) }}
+                            </div>
+                </div>
+
+                <div class="row justify-content-around">
+                    <button  class="boutonMenu btn mb-3">{{ button_label|default('Valider') }}</button>
+                </div>
+
+            {{ form_end(form) }}
+
+        </div>
+
+    </div>
+{% endblock %}

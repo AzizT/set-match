@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Profil Parametrable de {{ user.username }}{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-around pt-5">
+
+<h1 class="titre mt-5 py-1">Bonjour, {{ user.username }}</h1>
+
+</div>
+
+<div class="row justify-content-around mt-5">
+    
+    <div class="col-md-10 accueil mb-5">
+
+            <h2 class="text-center mb-5">Vérifiez et Reglez votre <strong>Profil</strong></h2>
+
+            {# message flash codé dans le  controller, appelé ici, pour alerter que le profil a bien été modifié via le formulaire #}
+            {% for message in app.flashes('profil_edit') %}
+            <div class="alert alert-warning">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+
+            <div class="row mb-4">
+
+                <div class="col-md-5 mx-auto aide_profil p-5 text-center">
+                    <p>Ces <strong>informations</strong> seront exposées aux autres inscrits.</p>
+                    <p>Pensez à bien <strong>parametrer</strong>, vos <strong>disponibilités</strong> (dates et lieux), en les mettant à jour au fur et à mesure.</p>
+                </div>
+
+                <div class="col-md-5 mx-auto aide_profil p-3 mb-1 text-center">
+
+                
+                    {% if user.imageName %}
+                        <img class="mb-2" src="{{ asset('img/' ~ user.imageName ) }}" alt="Portrait de {{ user.prenom }} {{ user.nom }}" title="Portrait de {{ user.prenom }} {{ user.nom }}" loading="lazy">
+                    {% else %}
+                        <img src="{{ asset('img/player.jpg') }}" class="card-img-top" alt="Portrait de {{ user.prenom }} {{ user.nom }}" title="Portrait de {{ user.prenom }} {{ user.nom }}" loading="lazy">
+                    {% endif %}
+                
+                
+
+                    <p class="card-text mb-1">Nom d'Utilisateur: {{ user.username }}</p>
+                    <p class="card-text mb-1">Nom: {{ user.nom }}</p>
+                    <p class="card-text mb-1">Prénom: {{ user.prenom }}</p>
+                    <p class="card-text mb-1">Email: {{ user.email }}</p>
+                    
+                    <p class="card-text mb-1">Catégorie: {{ user.category }}</p>
+                    <p class="card-text mb-1">Langue étrangère: </p>
+                    {% if is_granted('ROLE_COACH') %}
+                    <p class="card-text mb-1">Spécialité Coach: </p>
+                    {% endif %}
+                    <a href="{{ path('profil_edit', {id: user.id})}}"><button type="button" class="btn btn-lg boutonMenu mt-3">Complétez/<br>Modifiez votre profil</button></a>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="col-md-8 mx-auto my-3 aide_profil p-3">
+            <h3 class="text-center mb-3">Votre disponibilité</h3>
+                <p class="card-text mb-1">
+                {% for planning in plannings %}
+                    {% if loop.last %}
+                        
+                        A {{planning.lieu.city}}, du {{planning.dateDebut | date ("d/m/Y")}} au {{planning.dateFin | date ("d/m/Y")}} 
+                        {% else %}
+                    {% endif %}
+                {% endfor %}
+                </p>
+            </div>
+
+            <h2 class="text-center">Gérez votre <strong>Planning</strong></h2>
+            
+            <div class="text-center">
+            <a href="{{ path('ajouter_disponibilite') }}"><button type="button" class="btn btn-lg boutonMenu mt-3">Je parametre</button></a>
+            </div>
+
+            <hr>
+
+            <div class="row mt-2">
+
+                <div class="col-md-5 mx-auto my-3 aide_profil p-3">
+                <h3 class="text-center mb-3">Votre présentation</h3>
+                    <p class="card-text mb-1">{{ user.presentation }}</p>
+                </div>
+
+                <div class="col-md-5 mx-auto my-3 aide_profil p-3">
+                <h3 class="text-center mb-3">Vos Besoins</h3>
+                    <p class="card-text mb-1">{{ user.besoins }}</p>
+                </div>
+
+            </div>
+
+            
+    </div>
+
+</div>
+
+{% endblock %}

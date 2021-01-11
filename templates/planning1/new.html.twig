@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une disponibilité{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui-1.10.3.custom.css') }}"{% endblock %}
+
+{% block content %}
+<div class="container pt-5">
+    <h1 class="text-center">Ajouter une disponibilité</h1>
+
+    <div class="row my-5 justify-content-around text-center">
+
+    {{ include('planning/_form.html.twig') }}
+
+    </div>
+
+    {# <a href="{{ path('planning_index') }}">back to list</a> #}
+</div>
+{% endblock %}

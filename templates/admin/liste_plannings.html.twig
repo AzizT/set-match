@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau des plannings{% endblock %}
+
+{% block content %}
+
+<div class="container pt-5">
+
+    <h1 class="row justify-content-around titre mt-5 py-1">Tableau des Plannings</h1>
+
+            {% for message in app.flashes('planning_remove') %}
+              <div class="alert alert-warning mt-1">
+                {{ message }}
+                {# fonctionnalité BS pour fermer l' alerte avec la croix #}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+
+            <a class="nav-link text-center" href="{{ path('admin_planning_add') }}">
+                <button class="add btn btn-outline-light my-4" type="button">
+                    Ajouter un Planning
+                </button>
+            </a>
+
+    <table  id="mydatatable" class="table table-dark table-hover text-center mb-5">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>DateDebut</th>
+                <th>DateFin</th>
+                <th>Lieu</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planning in plannings %}
+            <tr>
+                <td>{{ planning.id }}</td>
+                <td>{{ planning.user.username }}</td>
+                <td>{{ planning.dateDebut ? planning.dateDebut|date('d-m-Y') : '' }}</td>
+                <td>{{ planning.dateFin ? planning.dateFin|date('d-m-Y') : '' }}</td>
+                <td>{{ planning.lieu.city }}</td>
+                <td>
+                    {# <a href="{{ path('planning_show', {'id': planning.id}) }}">show</a> #}
+                    <button class="crud btn btn-outline-light btn-sm " type="button" title="Modifier"><a class="nav-link" href="{{ path('admin_planning_edit', {'id': planning.id}) }}"><i class="fas fa-pen-alt"></i></a></button>
+                    <button class="crud btn btn-outline-light btn-sm " type="button" title="Supprimer"><a class="nav-link" href="{{ path('admin_planning_delete', {id: planning.id}) }}"><i class="fas fa-trash-alt"></i></a></button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('planning_new') }}">Create new</a> #}
+
+</div>
+{% endblock %}
